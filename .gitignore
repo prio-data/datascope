@@ -1,0 +1,11 @@
+backend/certs/
+backend/venv/
+frontend/node_modules/
+__pycache__/
+frontend/build/
+*.py[cod]
+backend/static/
+backend/cache/
+backend/.env
+backend/static
+venv/
