@@ -5,11 +5,14 @@ RUN npm i --no-optional
 RUN npm run build
 
 FROM python:3.8
+RUN sed 's/SECLEVEL=[0-9]/SECLEVEL=1/g' /etc/ssl/openssl.cnf > /etc/ssl/openssl.cnf
+
+COPY requirements.txt /
+RUN pip install -r requirements.txt
+
+COPY backend/ /
+COPY --from=frontend /frontend/build /static
+
 ENV PRODUCTION=1
 
-COPY backend/ /backend
-COPY  --from=frontend /frontend/build /backend/static
-
-WORKDIR /backend
-RUN pip install -r requirements.txt
 CMD ["gunicorn","-b","0.0.0.0:80","-k","uvicorn.workers.UvicornWorker","--forwarded-allow-ips","*","--proxy-allow-from","*","app:app"]

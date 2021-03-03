@@ -9,3 +9,5 @@ backend/cache/
 backend/.env
 backend/static
 venv/
+penv
+local.env
